@@ -1,0 +1,20 @@
+O que é uma constraint em SQL?
+
+Constraints (restrições) mantém os dados do usuário restritos, e assim evitam que dados inválidos sejam inseridos no banco. A mera definição do tipo de dado para uma coluna é por si só um constraint. Por exemplo, uma coluna de tipo DATE restringe o conteúdo da mesma para datas válidas.
+
+DDL - DATA DEFINITION LANGUAGE 
+
+DDL:CREATE DATABASE
+DDL:CREATE TABLE
+DDL:ALTER TABLE
+DDL:DROP  TABLE
+
+DML - DATA MNANIPULATION LANGUAGE
+
+DML: INSERT INTO
+DML: UPDATE
+DML: DELETE
+DML: TRUNCATE
+DML: SELECT
+
+
