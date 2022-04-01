@@ -44,8 +44,6 @@ CARGA - COUNT()
 30     - 3 = TENHO 3 CURSOS COM A CARGA HORÁRIO DE 30H.
 20     - 2 = TENHO 2 CURSOS COM A CARGA HORÁRIO DE 20H.
 Note que não foi repetida a carga 30.
-
-
 */
 
 SELECT carga, COUNT(*) FROM cursos

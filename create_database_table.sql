@@ -21,7 +21,7 @@ CREATE TABLE pessoas (
 
 /*APAGANDO O BANCO DE DADOS*/
 
-DROP DATABASE cadastro; /*A partir de agora o banco cadastro foi excluido */ 
+DROP DATABASE cadastro; /*A partir de agora o banco 'cadastro' foi excluido */ 
 
 /*CRIANDO O BANCO DE DADOS DE OUTRA FORMA*/
 /* setando as configurações de caracteres especiais no banco*/

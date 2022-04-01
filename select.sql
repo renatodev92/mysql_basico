@@ -108,8 +108,8 @@ WHERE nome LIKE 'PH%P_';
 /*DISTINCT*/
 /*A instrução SELECT DISTINCT é usada para retornar apenas valores distintos (diferentes). Dentro de uma tabela, uma coluna geralmente contém muitos valores duplicados; E às vezes você só deseja listar os diferentes valores (distintos)*/
 
-/*Verifica quais naciolidades existem na tabela gafanhotos*/
-SELECT DISTINCT nacionalidade FROM gafanhotos
+/*Verifica quais naciolidades existem na tabela clientes*/
+SELECT DISTINCT nacionalidade FROM clientes
 ORDER BY nacionalidade;
 
 

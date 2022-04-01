@@ -18,3 +18,182 @@ DML: TRUNCATE
 DML: SELECT
 
 
+----------------------------------------------------------------------------
+
+BANCO DE DADOS RELACIONAL O QUE É? 
+
+Um banco de dados relacional é um tipo de banco de dados que armazena e fornece acesso a pontos de dados relacionados entre si. Bancos de dados relacionais são baseados no modelo relacional, uma maneira intuitiva e direta de representar dados em tabelas.
+
+----------------------------------------------------------------------------
+
+ENTIDADE? É COMO SE FOSSE UMA TABELA DENTRO DO BANCO.
+Uma entidade é uma representação de um conjunto de informações sobre determinado conceito do sistema. Toda entidade possui ATRIBUTOS, que são as informações que referenciam a entidade.
+
+----------------------------------------------------------------------------
+
+o QUE É CHAVE PRIMÁRIA?
+A chave primária, ou Primary key (PK) é o identificador único de um registro na tabela. Pode ser constituída de um campo (chave simples) ou pela combinação de dois ou mais campos (chave composta), de tal maneira que não existam dois registros com o mesmo valor de chave primária.
+
+----------------------------------------------------------------------------
+CHAVE ESTRANGEIRA O QUE É?
+É chave primaria de algum lugar que veio pra outro lugar
+
+----------------------------------------------------------------------------
+
+CARDINALIDADE
+A cardinalidade é um número que expressa o comportamento (número de ocorrências) de determinada entidade associada a uma ocorrência da entidade em questão através do relacionamento.
+
+----------------------------------------------------------------------------
+
+Os relacionamentos entre dados de diferentes tabelas podem ser de três tipos:
+
+1 – 1 (um para um);
+RELACIONAMENTO DO TIPO UM PARA UM.
+Ex: No brasil, 1 esposa só pode ter 1 marido. E 1 marido só pode ter 1 esposa.
+
+CRIANDO AS ENTIDADES (TABELAS)
+
+MARIDO
+    CPF MARIDO: Primary KEY
+    NOME:
+    NASCIMENTO:
+    NACIONALIDADE:
+
+ESPOSA
+    CPF ESPOSA: Primary KEY
+    NOME:
+    NASCIMENTO:
+    NACIONALIDADE:
+
+Agora defina MARIDO como entidade dominante e pegue a chave primary key de esposa e joga como chave estrangeira na entidade dominante marido.
+Assim as suas tabelas terão o modelo relacional.
+
+MARIDO
+    CPF MARIDO: (CHAVE ESTRANGEIRA)
+    CPF ESPOSA: Primary KEY
+    NOME:
+    NASCIMENTO:
+    NACIONALIDADE:
+
+----------------------------------------------------------------------------
+
+1 – N (um para vários) ;
+RELACIONAMENTO DO TIPO UM PARA VÁRIOS.
+Ex: Na folha de pagamento 1 colaborador pode ter vários dependentes. Mais 1 dependente só pode ter 1 colaborador.
+
+CRIANDO AS ENTIDADES (TABELAS)
+
+
+COLABORADOR
+    CPF COLABORADOR: PRIMARY KEY
+    NOME:
+    CARGO:
+    ESPECIALIDADE:
+
+
+DEPENDENTE
+    ID: PRIMARY KEY
+    NOME:
+    NASCIMENTO:
+    NACIONALIDADE:
+
+Agora pega a chave do lado 1(um)COLABORADOR e jogue do lado n(vários)DEPENDETE e joga como chave estrangeira. Sendo assim a entidade dependente ficará da seguinte forma.
+Assim as suas tabelas terão o modelo relacional.
+
+DEPENDENTE
+    CPF COLABORADOR: (CHAVE ESTRANGEIRA)
+    ID: PRIMARY KEY
+    NOME:
+    NASCIMENTO:
+    NACIONALIDADE:
+
+
+----------------------------------------------------------------------------
+
+N – N (muitos para muitos);
+RELACIONAMENTO DO TIPO VÁRIOS PARA VÁRIOS.
+Ex: 1 produto pode ser comprado por vários clientes. E 1 cliente pode comprar vários produtos.
+
+
+CRIANDO AS ENTIDADES (TABELAS)
+
+CLIENTE
+    CPF CLIENTE: PRIMARY KEY
+    NOME:
+    ENDEREÇO:
+    TELEFONE:
+
+
+PRODUTO
+    COD PRODUTO: PRIMARY KEY
+    NOME:
+    FABRICANTE:
+    PREÇO:
+
+
+Agora vamos criar outra entidade chamada COMPRA. Com ela vamos relacionar as tabelas CLIENTE e PRODUTO.
+Note que agora toda compra tem um produto e toda compra tem um cliente.
+Assim relacionamos as tabelas N para N(muitos para muitos).
+
+COMPRA
+    CPF CLIENTE: CHAVE ESTRANGEIRA (VINDO DE CLIENTE)
+    COD PRODUTO: CHAVE ESTRANGEIRA (VINDO DE PRODUTO)
+    IDCOMPRA: PRIMARY KEY
+    DATACOMPRA:
+    FORMADEPAGAMENTO:
+    QUANTIDADE:
+
+----------------------------------------------------------------------------
+INNO DP
+
+Para que serve o InnoDB?
+InnoDB é um mecanismo de armazenamento para o MySQL. O MySQL 5.5, e versões posteriores, o utilizam por padrão. Ele fornece as funcionalidades padrões de transação complacentes com ACID, juntamente com o suporte a chave estrangeira (Integridade Referencial Declarativa).
+
+----------------------------------------------------------------------------
+
+
+AS 4 PRINCIPAIS REGRAS DE UMA BOA TRANSAÇÃO EM BANCO DE DADOS
+
+ACID
+
+ATOMICIDADE
+Ela não pode ser dividade em subtarefas. Eu tenho uma terafa a fazer, ou todade tarefa é feita ou nada será considero.
+Arruma o seu quarto, dai você só arruma metade.
+A sua tarefa não foi atomica.
+Ou tudo acontece ou nada é considerado.
+
+CONSISTÊNCIA
+O banco de dados que estava consistente antes, tem que estar consistente depois da transação.
+Não podemos ocorrer falhas e nem inconsistências na transação.
+
+
+ISOLAMENTO
+Quando eu tenho duas transações acontecendo de forma paralela, elas devem acontecer como se fossem de forma isolada. Sem que nenhuma afete a outra.
+Sendo assim, caso várias pessoas estivem acessando o banco de dados ao mesmo tempo, elas devem fazer tarefas diferentes, de forma (isolada) sem alterar o banco.
+
+
+DURABILIDADE
+Uma transação deve ser duravel. Ela deve durar o tempo que for necessário para ser executada.
+Ex: Se você cadastrou um número novo de telefone ao cliente, significa que ele deve durar no banco de dados o tempo necessário para que você possa acessar o dado assim que possivel.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
