@@ -115,7 +115,7 @@ ON cursos.id_curso = matricula.id_curso;
 SELECT cli.id_cliente, cli.nome, cli.profissao, cli.cursoescolhido, 
 cur.id_curso, cur.nome_curso, cur.descricao_curso, cur.totaulas_curso, cur.ano_criacao_curso
 FROM clientes AS cli RIGHT JOIN cursos AS cur
-ON cli.cursoescolhido = cur.id_curso
+ON cli.cursoescolhido = cur.id_curso 
 WHERE cli.cursoescolhido IS NULL;
 
 --Outro modelo de CONSULTA JOIN
@@ -126,7 +126,15 @@ ON cli.id_cliente = mat.id_cliente
 INNER JOIN cursos AS cur
 ON cli.cursoescolhido = cur.id_curso;
 
-
+--Outro modelo de CONSULTA JOIN
+--Exibindo os resultados dos clientes que até o momento estão matriculados no cursos.
+SELECT  clientes.id_cliente, clientes.nome, clientes.profissao,clientes.cursoescolhido,
+		cursos.id_curso, matricula.id_matricula, cursos.nome_curso, cursos.descricao_curso, cursos.valor_curso
+FROM cursos INNER JOIN clientes
+ON  clientes.cursoescolhido = cursos.id_curso
+INNER JOIN matricula 
+ON clientes.id_cliente = matricula.id_cliente
+ORDER BY clientes.nome;
 
 
 
