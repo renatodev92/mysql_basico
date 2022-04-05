@@ -110,6 +110,23 @@ INNER JOIN cursos
 ON cursos.id_curso = matricula.id_curso;
 
 
+--Outro modelo de CONSULTA JOIN
+
+SELECT cli.id_cliente, cli.nome, cli.profissao, cli.cursoescolhido, 
+cur.id_curso, cur.nome_curso, cur.descricao_curso, cur.totaulas_curso, cur.ano_criacao_curso
+FROM clientes AS cli RIGHT JOIN cursos AS cur
+ON cli.cursoescolhido = cur.id_curso
+WHERE cli.cursoescolhido IS NULL;
+
+--Outro modelo de CONSULTA JOIN
+SELECT cli.id_cliente, cli.nome, cli.profissao, 
+	   mat.id_curso, cur.nome_curso,  cur.descricao_curso, mat.datamatricula, mat.id_matricula
+FROM clientes AS cli INNER JOIN matricula AS mat
+ON cli.id_cliente = mat.id_cliente
+INNER JOIN cursos AS cur
+ON cli.cursoescolhido = cur.id_curso;
+
+
 
 
 
