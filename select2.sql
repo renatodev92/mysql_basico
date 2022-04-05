@@ -1,53 +1,23 @@
 /* O COMANDO MAIS IMPORTANTE DO SQL - SELECT*/
-/*COM O SELECT VOCÊ PODE SELECIONAR VARIOS DADOS*/
 
-/*Exibindo os valores da carga horária que eu tenho dentro da tabela cursos.Ele não repete a carga caso tenha um valor repetido*/
-/* EX:
-PHP: 30H
-JAVA: 30H
-RUBY: 30H
-CSS: 20H 
+-- SELECT DISTINCT - A instrução SELECT DISTINCT é usada para retornar apenas valores distintos (diferentes). Dentro de uma tabela, uma coluna geralmente contém muitos valores duplicados; E às vezes você só deseja listar os diferentes valores (distintos).
 
-O resultado final com o DISTINCT será:
-20
-30
-Note que não foi repetida a carga 30.
+-- Selecione da tabela cursos, o campo ano_criacao_curso, e retorne os anos em que houveram cursos. Caso haja uma ano repitido o comando SELECT DISTINCT não retornará.
 
-*/
-SELECT DISTINCT carga FROM cursos
-ORDER BY carga;
+SELECT DISTINCT ano_criacao_curso FROM cursos
+ORDER BY ano_criacao_curso;
 
-/*Contando o total de aulas da tabela cursos.*/
-/*GRUPO BY - Exibindo quantos cursos tem por totaulas*/
-SELECT totaulas, COUNT(*) FROM cursos
-GROUP BY totaulas;
-ORDER BY totaulas;
+/*Contando o totaulas_curso da tabela cursos.*/
+/*GRUPO BY - Exibindo quantos cursos tem por totaulas_curso*/
+SELECT totaulas_curso, COUNT(*) AS 'NUMERO DE CURSOS' FROM cursos
+GROUP BY totaulas_curso
+ORDER BY totaulas_curso;
 
-/*Execute esse comando após o comando acima. */
-SELECT * FROM cursos
-WHERE totaulas = 30;
+/*Contando o carga_curso da tabela cursos.*/
+/*GRUPO BY - Exibindo quantos cursos tem por carga_curso*/
 
-/* Conte quantos cursos eu tenho com a carga horária igual. */
-
-/* EX:
-
-PHP: 30H
-JAVA: 30H
-RUBY: 30H
-CSS: 20H 
-CSS2.5: 20H
-
-O resultado final com o GROUP BY será:
-
-
-CARGA - COUNT()
-30     - 3 = TENHO 3 CURSOS COM A CARGA HORÁRIO DE 30H.
-20     - 2 = TENHO 2 CURSOS COM A CARGA HORÁRIO DE 20H.
-Note que não foi repetida a carga 30.
-*/
-
-SELECT carga, COUNT(*) FROM cursos
-GROUP BY carga;
+SELECT carga_curso, COUNT(*) AS 'Quantidade de Cursos por carga horária'FROM cursos
+GROUP BY carga_curso
 
 /* Conte quantos cursos eu fiz por ano. */
 /* E ordene pelo COUNT(*)/CONTADOR*/
@@ -59,18 +29,29 @@ ORDER BY COUNT(*);
 /* Conte quantos cursos eu fiz por ano. */
 /* E retorne pelo COUNT(*), somente os anos que eu dei >= 5 cursos.CONTADOR*/
 
-SELECT ano, COUNT(*) FROM cursos
-GROUP BY ano
-HAVING COUNT(ano) >= 5;
+SELECT ano_criacao_curso, COUNT(*) FROM cursos
+GROUP BY ano_criacao_curso
+HAVING COUNT(ano_criacao_curso) >= 5
 ORDER BY COUNT(*);
 
-SELECT ano, COUNT(*) FROM cursos /*Selecione os anos da tabela cursos*/
-WHERE totaulas > 30/* Onde o total de aulas seja acima de 30*/
-GROUP BY ano /* Agrupar a seleção por ano*/
-HAVING ano > 2013 /*Só vou mostrar quem tem o ano acima de 2013. */
-ORDER BY COUNT(*) DESC; /* Ordenando*/
+/* SELECT - Selecione a coluna ano_criacao_curso da tabela cursos e conte as linhas*/
+/* WHERE - Onde o totaulas_curso seja maior que 30*/
+/* GROUP BY -  Agrupar a seleção por ano_criacao_curso*/
+/* HAVING - Só vou mostrar quem tem o ano_criacao_curso acima de 2013. */
+/* ORDER BY - Ordene por ordem decrescente*/
 
-SELECT carga, COUNT(*) from cursos /* Selecione a coluna carga da tabela curos*/
-WHERE ano > 2016 /*Onde o ano é maior que 2016*/
-GROUP BY carga/* E monte o agrupamento por carga horária*/
-HAVING carga > (SELECT AVG(carga) from cursos); /*Mostre somente quem está acima do resultado de outro select*/
+SELECT ano_criacao_curso, COUNT(*) FROM cursos  
+WHERE totaulas_curso > 30
+GROUP BY ano_criacao_curso 
+HAVING ano_criacao_curso > 2013  
+ORDER BY COUNT(*) DESC; 
+
+/* SELECT   - Selecione a coluna carga_curso da tabela cursos*/
+/* WHERE    - ano_criacao_curso > 2016*/
+/* GROUP BY - E monte o agrupamento por  carga_curso*/
+/* HAVING   - E mostre somente a coluna carga_curso onde a carga_curso for > que a médias da carga horária total de cursos. */
+
+SELECT carga_curso, COUNT(*) FROM cursos
+WHERE ano_criacao_curso > 2016
+GROUP BY carga_curso
+HAVING carga_curso > (SELECT AVG(carga_curso) FROM cursos);
