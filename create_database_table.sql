@@ -69,6 +69,34 @@ CREATE TABLE IF NOT EXISTS teste (
 ) DEFAULT charset = utf8;
 
 
+/*Criando Novas Tabelas*/
+
+USE cadastro;
+
+SELECT * FROM PFUNC;
+CREATE TABLE PFUNC (
+	id BIGINT(20) NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(100),
+    sobrenome VARCHAR(100),
+    cargo VARCHAR(100),
+    salario DOUBLE(8,2), 
+    data_de_admissao DATE,
+    data_de_demissao DATE,
+    PRIMARY KEY (id)
+) DEFAULT charset = utf8;
+
+CREATE TABLE PDEP (
+	id BIGINT(20) NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(100),
+    sobrenome VARCHAR(100),
+    data_de_nascimento DATE,
+    pfunc_id BIGINT(20),
+    PRIMARY KEY(id),
+    FOREIGN KEY(pfunc_id) REFERENCES PFUNC(id)
+) DEFAULT charset = utf8;
+
+
+
 
 
 
