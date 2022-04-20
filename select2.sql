@@ -55,3 +55,20 @@ SELECT carga_curso, COUNT(*) FROM cursos
 WHERE ano_criacao_curso > 2016
 GROUP BY carga_curso
 HAVING carga_curso > (SELECT AVG(carga_curso) FROM cursos);
+
+
+/* Selecionando a tabela clientes e extraindo do campo nascimento 
+    DIA - DAY()
+    MÊS - MONTH()
+    YEAR - YEAR()
+*/
+USE cadastro;
+SELECT * FROM cliente;
+
+SELECT
+	nome,
+	DAY(nascimento) AS dia_nascimento,
+    MONTH(nascimento) AS mes_nascimento,
+    YEAR(nascimento) AS ano_nascimento
+FROM cliente
+HAVING ano_nascimento BETWEEN 1970 AND 1980;

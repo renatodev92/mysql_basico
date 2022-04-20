@@ -88,6 +88,24 @@ ORDER BY valor_unitario;
 
 SELECT * FROM produto;
 
+-- 6: Usando uma expressão CASE com SQL GROUP BY
+-- Agora, para este último exemplo, suponha que precisamos agrupar os produtos com base na quantidade disponível de cada um. Além disso, queremos identificar qual é a maior e a menor quantidade de itens dentro de cada grupo formado. Para isso, os itens serão agrupados de acordo com a lógica:
+
+SELECT
+	CASE
+	  WHEN quantidade <= 50 THEN 'Estoque baixo.'
+	  WHEN quantidade <= 150 THEN 'Estoque Médio.'
+	ELSE 'Estoque alto.'
+	END AS nivelEstoque,
+	MIN(quantidade) as 'menor_quantidade',
+	MAX(quantidade) as 'maior_quantidade'
+	FROM produto
+	GROUP BY 
+		CASE
+			WHEN quantidade <= 50 THEN 'Estoque baixo'
+			WHEN quantidade <= 150 THEN 'Estoque médio'
+			ELSE 'Estoque alto'
+		END; 
 
 
 

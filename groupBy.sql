@@ -43,7 +43,10 @@ SELECT tipo, fabricante, nome, valor_unitario, quantidade, SUM(quantidade * valo
 FROM produto
 GROUP by tipo, fabricante, nome, valor_unitario, quantidade;
 
-SELECT nome, SUM(quantidade) AS 'total_estoque', SUM(quantidade * valor_unitario) 'valor_estoque'
+SELECT nome, SUM(quantidade) AS 'total_estoque', 
+SUM(quantidade * valor_unitario) 'valor_estoque'
 FROM produto
 GROUP BY nome
 HAVING SUM(quantidade) > 200 AND SUM(quantidade * valor_unitario) >= 100000.00;
+
+
