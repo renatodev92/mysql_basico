@@ -82,3 +82,5 @@ SELECT * FROM vw_numero_de_matriculas;
 DROP VIEW vw_numero_de_matriculas;
 
 
+
+
