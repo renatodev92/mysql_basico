@@ -305,7 +305,7 @@ GROUP BY TRUNC((months_between(sysdate,PPESSOA.DTNASCIMENTO))/12)
 ORDER BY TOTAL_POR_IDADE DESC;
 
 
--- Criando uma VIEW da consulta realziada acima. 
+-- Criando uma VIEW da consulta realizada acima. 
 CREATE VIEW  VW_RENATOTESTE AS
 SELECT 
     PFUNC.CHAPA,
