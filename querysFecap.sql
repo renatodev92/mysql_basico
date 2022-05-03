@@ -332,10 +332,10 @@ SELECT
     PFUNC.DATAADMISSAO,
     TRUNC((months_between(sysdate,PFUNC.DATAADMISSAO))/12) AS TEMPOCASA,
     CASE
-        WHEN TRUNC((months_between(sysdate,PFUNC.DATAADMISSAO))/12) BETWEEN '10' AND '15' THEN 'Funcionário PRATA de 10 a 15 anos'
-        WHEN TRUNC((months_between(sysdate,PFUNC.DATAADMISSAO))/12) BETWEEN '16' AND '20' THEN 'Funcionário BRONZE 16 a 20 anos'
-        WHEN TRUNC((months_between(sysdate,PFUNC.DATAADMISSAO))/12) BETWEEN '21' AND '30' THEN 'Funcionário OURO 21 A 30 anos de casa'
-        WHEN TRUNC((months_between(sysdate,PFUNC.DATAADMISSAO))/12) BETWEEN '31' AND '60' THEN 'Funcionário DIAMANTE 31 A 50 anos de casa'
+        WHEN TRUNC((months_between(sysdate,PFUNC.DATAADMISSAO))/12) BETWEEN '10' AND '15' THEN 'Adicional PRATA de 10 a 15 anos'
+        WHEN TRUNC((months_between(sysdate,PFUNC.DATAADMISSAO))/12) BETWEEN '16' AND '20' THEN 'Adicional BRONZE 16 a 20 anos'
+        WHEN TRUNC((months_between(sysdate,PFUNC.DATAADMISSAO))/12) BETWEEN '21' AND '30' THEN 'Adicional OURO 21 A 30 anos de casa'
+        WHEN TRUNC((months_between(sysdate,PFUNC.DATAADMISSAO))/12) BETWEEN '31' AND '60' THEN 'Adicional DIAMANTE 31 A 50 anos de casa'
         ELSE 'Menor que 10 anos de casa'
     END AS TIPOFUNCIONARIO,
     PFUNC.CODSITUACAO,
@@ -358,6 +358,42 @@ ON PSECAO.CODCOLIGADA = PFUNC.CODCOLIGADA AND PSECAO.CODIGO = PFUNC.CODSECAO
 WHERE PFUNC.CODSITUACAO != 'D' AND 
       PFUNC.CODRECEBIMENTO != 'H'
 ORDER BY TEMPOCASA DESC;
+
+
+-- Criando uma VIEW para verificar o tempo de casa, dias do aviso e valor total de aviso que cada colaborador que está ativo tem direito a receber.
+
+
+CREATE VIEW VW_RENATOTESTE AS
+SELECT 
+    PFUNC.CHAPA,
+    PPESSOA.NOME,
+    PFUNC.CODSITUACAO,
+    PFUNC.DATAADMISSAO,
+    PFUNC.SALARIO,
+    (PFUNC.SALARIO / 30) AS VALORDIA, 
+    TRUNC((months_between(sysdate, PFUNC.DATAADMISSAO))/12) AS TEMPODECASA,
+    TRUNC((months_between(sysdate, PFUNC.DATAADMISSAO))/12) * 3 + 30 AS QUANTIDADEDIASAVISO
+FROM PFUNC
+INNER JOIN PPESSOA
+ON PPESSOA.CODIGO = PFUNC.CODPESSOA
+WHERE PFUNC.CODSITUACAO = 'A' AND PFUNC.CODRECEBIMENTO = 'M';
+
+
+
+SELECT CHAPA,
+       NOME,
+       CODSITUACAO,
+       DATAADMISSAO,
+       SALARIO,
+       VALORDIA,
+       TEMPODECASA,
+       QUANTIDADEDIASAVISO,
+       (SALARIO / 30) * QUANTIDADEDIASAVISO AS TOTALPASSIVOTRABALHISTA
+FROM VW_RENATOTESTE;
+
+
+SELECT * FROM VW_RENATOTESTE;
+
 
 
 
