@@ -372,7 +372,7 @@ ORDER  BY PFUNC.NOME,
           PFCODFIX.CODEVENTO;
 
 
-/* -- Query compara individualmente a folha mês anterior X mês atual, com base nos parâmetros.
+/* -- Query compara individualmente a folha mês atual X mês anterior, com base nos parâmetros.
 --Parametros:
 
 -- :ANO_ATUAL
@@ -455,7 +455,7 @@ ORDER  BY B.PROVDESCBASE,
           B.CODIGO 
  
 
-/* -- Query compara GERAL a folha mês anterior X mês atual, com base nos parâmetros. Somente CLT.
+/* -- Query compara GERAL a folha mês atual X mês anterior, com base nos parâmetros. Somente CLT.
 --Parametros:
 
 -- :ANO_ATUAL
@@ -536,6 +536,98 @@ WHERE  A.CODSITUACAO != 'D'
               OR D.VALOR > 0 )
 ORDER  BY A.NOME, B.PROVDESCBASE DESC,
           B.CODIGO ;
+
+
+/* -- Query compara por SEÇÃO a folha mês atual X mês anterior, com base nos parâmetros.
+--Parametros:
+
+-- :ANO_ATUAL
+-- :MES_ATUAL
+-- :PERIODO_ATUAL
+
+-- :ANO_ANTERIOR
+-- :MES_ANTERIOR
+-- :PERIODO_ANTERIOR
+
+-- :CODSECAO */
+
+SELECT A.CHAPA,
+       A.NOME,
+       E.NOME      AS CARGO,
+       F.DESCRICAO AS DEPARTAMENTO,
+       A.DATAADMISSAO,
+       CASE A.CODSITUACAO
+         WHEN 'A' THEN 'Ativo'
+         WHEN 'D' THEN 'Demitido'
+         WHEN 'E' THEN 'Licenç.Mater.'
+         WHEN 'F' THEN 'Férias'
+         WHEN 'I' THEN 'Apos. por Incapacidade Permanente'
+         WHEN 'L' THEN 'Licença s/ venc'
+         WHEN 'M' THEN 'Serv.Militar'
+         WHEN 'O' THEN 'Doença Ocupacional'
+         WHEN 'P' THEN 'Af.Previdência'
+         WHEN 'R' THEN 'Licença Remun.'
+         WHEN 'S' THEN 'Mandato Sindical Ônus do Sindicato'
+         WHEN 'T' THEN 'Af.Ac.Trabalho'
+         WHEN 'U' THEN 'Outros'
+         WHEN 'V' THEN 'Aviso Prévio'
+         WHEN 'X' THEN 'C/Dem.no mês'
+         WHEN 'Z' THEN 'Admissão prox.mês'
+         WHEN 'W' THEN 'Licença Mater.Compl. 180 dias'
+         WHEN 'C' THEN 'Contrato de Trabalho Suspenso'
+         WHEN 'N' THEN 'Mandato Sindical Ônus do Empregador'
+         WHEN 'G' THEN 'Recesso Remunerado de Estagio'
+         WHEN 'Y' THEN 'Licença Paternidade'
+         WHEN 'K' THEN 'Cessão / Requisição'
+         WHEN 'Q' THEN 'Prisão / Cárcere'
+         ELSE 'VERIFICAR NOVA SITUAÇÃO.'
+       END         AS SITUACAO,
+       A.CODRECEBIMENTO,
+       B.CODIGO    NROEVENTO,
+       CASE B.PROVDESCBASE
+         WHEN 'P' THEN 'Provento'
+         WHEN 'D' THEN 'Desconto'
+         WHEN 'B' THEN 'Base'
+       END         AS TIPOEVENTO,
+       B.DESCRICAO AS NOMEEVENTO,
+       C.REF       AS REF_MES_ATUAL,
+       C.VALOR     AS VALOR_MES_ATUAL,
+       D.REF       AS REF_MES_ANTERIOR,
+       D.VALOR     AS VALOR_MES_ANTERIOR
+/*C.VALOR - D.VALOR AS DIFERENCA*/
+FROM   PFUNC A
+       LEFT JOIN PEVENTO B
+              ON A.CODCOLIGADA = B.CODCOLIGADA
+       LEFT JOIN PFFINANC C
+              ON B.CODCOLIGADA = C.CODCOLIGADA
+                 AND B.CODIGO = C.CODEVENTO
+                 AND A.CHAPA = C.CHAPA
+                 AND C.ANOCOMP = :ANO_ATUAL
+                 AND C.MESCOMP = :MES_ATUAL
+                 AND C.NROPERIODO = :PERIODO_ATUAL
+       LEFT JOIN PFFINANC D
+              ON B.CODCOLIGADA = D.CODCOLIGADA
+                 AND B.CODIGO = D.CODEVENTO
+                 AND A.CHAPA = D.CHAPA
+                 AND D.ANOCOMP = :ANO_ANTERIOR
+                 AND D.MESCOMP = :MES_ANTERIOR
+                 AND D.NROPERIODO = :PERIODO_ANTERIOR
+       LEFT JOIN PFUNCAO E
+              ON A.CODCOLIGADA = E.CODCOLIGADA
+                 AND A.CODFUNCAO = E.CODIGO
+       LEFT JOIN PSECAO F
+              ON A.CODCOLIGADA = F.CODCOLIGADA
+                 AND A.CODSECAO = F.CODIGO
+WHERE  A.CODSITUACAO != 'D'
+       AND A.CODSECAO = :CODSECAO
+       AND A.CODRECEBIMENTO != 'H'
+       AND ( C.VALOR > 0
+              OR D.VALOR > 0 )
+ORDER  BY A.NOME,
+          B.PROVDESCBASE DESC,
+          B.CODIGO;
+
+
 
 ------------------------------------ PROXIMA QUERY ---------------------
 
