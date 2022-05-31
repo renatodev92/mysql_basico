@@ -535,7 +535,9 @@ WHERE  A.CODSITUACAO != 'D'
        AND ( C.VALOR > 0
               OR D.VALOR > 0 )
 ORDER  BY A.NOME, B.PROVDESCBASE DESC,
-          B.CODIGO 
+          B.CODIGO ;
+
+------------------------------------ PROXIMA QUERY ---------------------
 
 
 
