@@ -30,7 +30,7 @@ ORDER BY anocomp DESC;
 SELECT estadocivil, COUNT(*) AS TOTAL,
     CASE estadocivil
         WHEN 'S' THEN 'Solteiro'
-        WHEN 'C' THEN 'Casado'
+        WHEN 'C' THEN 'clientes'
         WHEN 'I' THEN 'Divorciado'
         WHEN 'O' THEN 'Outros'
         WHEN 'V' THEN 'Viúvo'

@@ -628,8 +628,80 @@ ORDER  BY A.NOME,
           B.CODIGO;
 
 
+-- Query utilizada para retornar os dados de endereço dos funcionários não desligados.
+
+SELECT 
+    PFUNC.CHAPA,
+    PFUNC.NOME,
+    CASE PFUNC.CODSITUACAO
+         WHEN 'A' THEN 'Ativo'
+         WHEN 'D' THEN 'Demitido'
+         WHEN 'E' THEN 'Licenç.Mater.'
+         WHEN 'F' THEN 'Férias'
+         WHEN 'I' THEN 'Apos. por Incapacidade Permanente'
+         WHEN 'L' THEN 'Licença s/ venc'
+         WHEN 'M' THEN 'Serv.Militar'
+         WHEN 'O' THEN 'Doença Ocupacional'
+         WHEN 'P' THEN 'Af.Previdência'
+         WHEN 'R' THEN 'Licença Remun.'
+         WHEN 'S' THEN 'Mandato Sindical Ônus do Sindicato'
+         WHEN 'T' THEN 'Af.Ac.Trabalho'
+         WHEN 'U' THEN 'Outros'
+         WHEN 'V' THEN 'Aviso Prévio'
+         WHEN 'X' THEN 'C/Dem.no mês'
+         WHEN 'Z' THEN 'Admissão prox.mês'
+         WHEN 'W' THEN 'Licença Mater.Compl. 180 dias'
+         WHEN 'C' THEN 'Contrato de Trabalho Suspenso'
+         WHEN 'N' THEN 'Mandato Sindical Ônus do Empregador'
+         WHEN 'G' THEN 'Recesso Remunerado de Estagio'
+         WHEN 'Y' THEN 'Licença Paternidade'
+         WHEN 'K' THEN 'Cessão / Requisição'
+         WHEN 'Q' THEN 'Prisão / Cárcere'
+         ELSE 'VERIFICAR NOVA SISTUAÇÃO.'
+    END                    AS SITUACAO,
+    PFUNC.CODSECAO,
+    PSECAO.DESCRICAO AS NOMESECAO,
+    PFUNCAO.NOME AS CARGO,
+    CASE PPESSOA.ESTADOCIVIL
+        WHEN 'S' THEN 'Solteiro'
+        WHEN 'C' THEN 'clientes'
+        WHEN 'I' THEN 'Divorciado'
+        WHEN 'O' THEN 'Outros'
+        WHEN 'V' THEN 'Viúvo'
+        WHEN 'P' THEN 'Separado'
+        WHEN 'D' THEN 'Desquitado'
+        WHEN 'E' THEN 'União Estável'
+        WHEN 'P' THEN 'Separado'
+        ELSE '???'
+    END AS ESTADOCIVIL,
+    CASE PPESSOA.SEXO
+        WHEN 'M' THEN 'Masculino'
+        ELSE 'Feminino'
+    END AS SEXO,
+    PPESSOA.RUA AS ENDERECO,
+    PPESSOA.NUMERO AS NUMERO,
+    PPESSOA.COMPLEMENTO AS COMPLEMENTO,
+    PPESSOA.BAIRRO,
+    PPESSOA.CEP,
+    PPESSOA.ESTADO,
+    PPESSOA.CIDADE,
+    PPESSOA.PAIS
+FROM PFUNC
+INNER JOIN PPESSOA
+ON PFUNC.CODPESSOA = PPESSOA.CODIGO
+INNER JOIN PSECAO
+ON PFUNC.CODCOLIGADA = PSECAO.CODCOLIGADA
+AND PFUNC.CODSECAO = PSECAO.CODIGO
+INNER JOIN PFUNCAO
+ON PFUNC.CODCOLIGADA = PFUNCAO.CODCOLIGADA
+AND PFUNC.CODFUNCAO = PFUNCAO.CODIGO
+WHERE PFUNC.CODSITUACAO != 'D'
+ORDER BY PSECAO.DESCRICAO,PFUNC.CODSECAO, PFUNC.CODSITUACAO;
+
 
 ------------------------------------ PROXIMA QUERY ---------------------
+
+
 
 
 
