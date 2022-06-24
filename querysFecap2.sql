@@ -664,7 +664,7 @@ SELECT
     PFUNCAO.NOME AS CARGO,
     CASE PPESSOA.ESTADOCIVIL
         WHEN 'S' THEN 'Solteiro'
-        WHEN 'C' THEN 'clientes'
+        WHEN 'C' THEN 'Casado'
         WHEN 'I' THEN 'Divorciado'
         WHEN 'O' THEN 'Outros'
         WHEN 'V' THEN 'Viúvo'
